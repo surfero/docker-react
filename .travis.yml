@@ -1,0 +1,13 @@
+# need super user permissions to work with Docker
+sudo: required
+services:
+  - docker
+
+# build docker image and tag it so travis can use it
+before_install:
+  - docker build -t surfero/docker-react -f Dockerfile.dev .
+
+# contains all commands needed to run test suite
+script:
+  - docker run -e CI=true surfero/docker-react npm run test
+
